@@ -8,119 +8,145 @@ class Mycalculator extends StatefulWidget {
 }
 
 class State_Mycalculator extends State<Mycalculator> {
-  int firstNum = 0;
-  int secondNum = 0;
+  bool isZeroTapped = true;
+  double firstNum = 0;
+  double secondNum = 0;
   String history = '';
   String textToDisplay = '';
   String operation = '';
-  bool isZeroTapped = true;
   bool isEqualButtonPressed = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            alignment: Alignment.bottomRight,
-            padding: EdgeInsets.all(16),
-            child: Text(
-              history,
-              style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Column(
+          children: [
+            Container(
+              height: 100,
+              decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.white.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(20)),
+              alignment: Alignment.bottomRight,
+              padding: EdgeInsets.only(right: 20, bottom: 20),
+              child: Text(
+                history,
+                style: TextStyle(
+                  fontSize: 33,
+                  color: Colors.white.withOpacity(0.2),
+                ),
+                maxLines: 5,
+              ),
+              margin: EdgeInsets.all(5),
             ),
-          ),
-          Container(
-            alignment: Alignment.bottomRight,
-            padding: EdgeInsets.all(16),
-            child: Text(
-              textToDisplay,
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 48,
-                  fontWeight: FontWeight.bold),
+            SizedBox(
+              height: 10,
             ),
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MyButton(Colors.grey, "Cl"),
-                MyButton(Colors.grey, "+/-"),
-                MyButton(Colors.grey, "%"),
-                MyButton(Colors.yellow, "/")
-              ],
+            Container(
+              decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(20)),
+              height: 150,
+              alignment: Alignment.bottomRight,
+              padding: EdgeInsets.only(right: 20, bottom: 20),
+              child: Text(
+                textToDisplay,
+                style: TextStyle(fontSize: 50, color: Colors.white),
+              ),
+              margin: EdgeInsets.all(5),
             ),
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MyButton(Colors.grey, "7"),
-                MyButton(Colors.grey, "8"),
-                MyButton(Colors.grey, "9"),
-                MyButton(Colors.yellow, "*")
-              ],
+            SizedBox(
+              height: 10,
             ),
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MyButton(Colors.grey, "4"),
-                MyButton(Colors.grey, "5"),
-                MyButton(Colors.grey, "6"),
-                MyButton(Colors.yellow, "-")
-              ],
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  MyButton(Colors.grey, "C"),
+                  MyButton(Colors.grey, "+/-"),
+                  MyButton(Colors.grey, "%"),
+                  MyButton(Colors.yellow, "/")
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MyButton(Colors.grey, "1"),
-                MyButton(Colors.grey, "2"),
-                MyButton(Colors.grey, "3"),
-                MyButton(Colors.yellow, "+")
-              ],
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  MyButton(Colors.grey, "7"),
+                  MyButton(Colors.grey, "8"),
+                  MyButton(Colors.grey, "9"),
+                  MyButton(Colors.yellow, "*")
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MyButton(Colors.grey, "."),
-                MyButton(Colors.grey, "0"),
-                MyButton(Colors.grey, "⌫"),
-                MyButton(Colors.yellow, "=")
-              ],
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  MyButton(Colors.grey, "4"),
+                  MyButton(Colors.grey, "5"),
+                  MyButton(Colors.grey, "6"),
+                  MyButton(Colors.yellow, "-")
+                ],
+              ),
             ),
-          )
-        ],
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  MyButton(Colors.grey, "1"),
+                  MyButton(Colors.grey, "2"),
+                  MyButton(Colors.grey, "3"),
+                  MyButton(Colors.yellow, "+")
+                ],
+              ),
+            ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  MyButton(Colors.grey, "."),
+                  MyButton(Colors.grey, "0"),
+                  MyButton(Colors.grey, "⌫"),
+                  MyButton(Colors.yellow, "=")
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 
   Widget MyButton(MaterialColor color, String s) {
-    return Card(
-      elevation: 15,
-      shadowColor: Colors.white70,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(45)),
+    return Expanded(
       child: InkWell(
+        hoverColor: Colors.black,
         onTap: () => onBtnTap(s),
-        child: Container(
-          height: 100,
-          width: 100,
-          child: Center(
+        child: Card(
+          elevation: 20,
+          color: Colors.black,
+          child: Container(
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                color: s == "+" || s == "-" || s == "*" || s == "/"
+                    ? Colors.orange.shade300
+                    : s == "C"
+                        ? Colors.red.shade400
+                        : Colors.blueGrey,
+                borderRadius: BorderRadius.circular(20)),
+            child: Center(
               child: Text(
-            s,
-            style: TextStyle(fontSize: 40),
-          )),
-          decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.all(Radius.circular(50))),
+                s,
+                style: TextStyle(fontSize: 33),
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -128,17 +154,18 @@ class State_Mycalculator extends State<Mycalculator> {
 
   void onBtnTap(String s) {
     debugPrint("===[$s]===");
-    if (s == "Cl") {
+    if (s == "C") {
       clearAll();
     } else if (s == "+" || s == "-" || s == "*" || s == "/" || s == "%") {
       setState(() {
-        _beforeoprend(s);
+        _operation(s);
       });
     } else if (s == "=") {
       if (textToDisplay.isNotEmpty) {
         setState(() {
-          _operationForEqual();
+          history += textToDisplay;
         });
+        _operationForEqual();
         isEqualButtonPressed = true;
       }
     } else if (s == "+/-") {
@@ -146,76 +173,65 @@ class State_Mycalculator extends State<Mycalculator> {
         if (textToDisplay.startsWith("-")) {
           textToDisplay = textToDisplay.split("-")[1];
         } else {
-          textToDisplay = "-${int.parse(textToDisplay)}";
+          textToDisplay = "-${double.parse(textToDisplay)}";
         }
       });
     } else if (s == "⌫") {
       setState(() {
         textToDisplay = textToDisplay.substring(0, textToDisplay.length - 1);
       });
-    } else if (s == "0") {
-      if (textToDisplay.isEmpty || textToDisplay == "0") {
-        setState(() {
-          textToDisplay = "0";
-        });
-      } else if (textToDisplay.isNotEmpty) {
-        setState(() {
-          textToDisplay += s;
-        });
-      }
     } else {
       setState(() {
+        if (s == "." && textToDisplay.contains(".")) {
+          return;
+        }
         textToDisplay += s;
         if (isEqualButtonPressed) {
-          history = "";
-          isEqualButtonPressed = true;
+          history = " ";
+          isEqualButtonPressed = false;
         }
       });
-
       debugPrint("===[Text to Display : $textToDisplay]===");
     }
   }
 
-  void _beforeoprend(String s) {
+  void _operation(String opration) {
     setState(() {
-      if (textToDisplay.isNotEmpty) {
-        int storeFirstVal = firstNum;
-        firstNum = int.parse(textToDisplay);
-        operation = s;
+      double tempVar = firstNum;
+      firstNum = double.parse(textToDisplay);
 
-        if (isEqualButtonPressed) {
-          history = '';
-          isEqualButtonPressed = false;
-        }
-
-        if (operation == '+') {
-          firstNum = firstNum + storeFirstVal;
-        }
-        if (operation == '-') {
-          firstNum = storeFirstVal - firstNum;
-        }
-        if (operation == '*') {
-          firstNum = storeFirstVal * firstNum;
-        }
-        if (operation == '/') {
-          firstNum = storeFirstVal % firstNum;
-        }
-
-        history += textToDisplay + operation;
-        textToDisplay = '';
-
-        debugPrint("===[First : $firstNum]===");
-        debugPrint("===[Temp : $storeFirstVal]===");
-        debugPrint("===[Second : $secondNum]===");
-        debugPrint("===[History : $history]===");
-        debugPrint("===[Text  : $textToDisplay]===");
+      if (operation == '+') {
+        firstNum = tempVar + firstNum;
       }
+      if (operation == '-') {
+        firstNum = tempVar - firstNum;
+      }
+      if (operation == '*') {
+        firstNum = tempVar * firstNum;
+      }
+      if (operation == '/') {
+        firstNum = tempVar / firstNum;
+      }
+      operation = opration;
+      if (isEqualButtonPressed) {
+        history = '';
+        isEqualButtonPressed = false;
+      }
+      history = textToDisplay + operation;
+      textToDisplay = '';
+      debugPrint("===[First : $firstNum]===");
+      debugPrint("===[Temp : $tempVar]===");
+      debugPrint("===[Second : $secondNum]===");
+      debugPrint("===[History : $history]===");
+      debugPrint("===[Text  : $textToDisplay]===");
     });
   }
 
   void _operationForEqual() {
     setState(() {
-      secondNum = int.parse(textToDisplay);
+      secondNum = double.parse(textToDisplay);
+      textToDisplay = "";
+
       if (operation == '+') {
         textToDisplay = (firstNum + secondNum).toString();
       }
@@ -232,14 +248,12 @@ class State_Mycalculator extends State<Mycalculator> {
         textToDisplay = (firstNum * secondNum / 100).toString();
       }
       _resetEqual();
-      // history += textToDisplay ;
-      // textToDisplay = '';
     });
   }
 
   void _resetEqual() {
-    history = '';
-    operation = '';
+    history = ' ';
+    operation = ' ';
     firstNum = 0;
     secondNum = 0;
   }
